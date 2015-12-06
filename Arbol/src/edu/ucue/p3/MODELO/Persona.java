@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.ucue.p3.MODELO;
 
 import java.io.Serializable;
 
 /**
- * 
+ *
  * @author Christian Quinde <christian24091992@gmail.com>
  */
-public class Persona implements Serializable{
+public class Persona implements Serializable, Comparable<Persona> {
+
     private String nombre;
     private String apellido;
     private String cedula;
@@ -26,7 +26,6 @@ public class Persona implements Serializable{
         this.cedula = cedula;
     }
 
-    
     /**
      * @return the nombre
      */
@@ -69,5 +68,14 @@ public class Persona implements Serializable{
         this.cedula = cedula;
     }
 
-    
+    @Override
+    public String toString() {
+        return "Cedula : " + getCedula() + "  Nombre y apellido: " + getNombre() + " " + getApellido() + "\n";
+    }
+
+    @Override
+    public int compareTo(Persona t) {
+        return this.getCedula().compareTo(t.getCedula());
+    }
+
 }
