@@ -6,15 +6,27 @@
 
 package edu.ucue.p3.MODELO;
 
+import java.io.Serializable;
+
 /**
  * 
- * @author Sammy Guergachi <sguergachi at gmail.com>
+ * @author Christian Quinde <christian24091992@gmail.com>
  */
-public class Persona {
+public class Persona implements Serializable{
     private String nombre;
     private String apellido;
     private String cedula;
 
+    public Persona() {
+    }
+
+    public Persona(String nombre, String apellido, String cedula) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cedula = cedula;
+    }
+
+    
     /**
      * @return the nombre
      */
