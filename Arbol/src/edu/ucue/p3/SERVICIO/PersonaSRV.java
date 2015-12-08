@@ -31,6 +31,9 @@ public class PersonaSRV {
         validarCedula(cedula);
         return PersonaDAO.instancia().read(cedula);
     }
+    public Persona buscarPersona(int i){
+        return PersonaDAO.instancia().recuperar(i);
+    }
 
     public boolean modificarPersona(String nombre, String apellido, String cedula) throws DataException {
         validarDatos(nombre, apellido);

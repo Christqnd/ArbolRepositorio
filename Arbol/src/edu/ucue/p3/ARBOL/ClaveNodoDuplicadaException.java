@@ -9,7 +9,7 @@ package edu.ucue.p3.ARBOL;
  *
  * @author khrist
  */
-class ClaveNodoDuplicadaException extends Exception {
+public class ClaveNodoDuplicadaException extends Exception {
 
     public ClaveNodoDuplicadaException() {
         super("la clave esta duplicada");

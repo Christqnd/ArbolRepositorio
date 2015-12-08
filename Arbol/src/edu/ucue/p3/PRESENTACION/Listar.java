@@ -5,6 +5,7 @@
  */
 package edu.ucue.p3.PRESENTACION;
 
+import edu.ucue.p3.DATOS.PersonaDAO;
 import edu.ucue.p3.MODELO.Persona;
 import edu.ucue.p3.SERVICIO.PersonaSRV;
 
@@ -20,8 +21,23 @@ public class Listar extends javax.swing.JFrame {
     public Listar() {
         initComponents();
         this.setLocationRelativeTo(null);
-        for (Persona persona : new PersonaSRV().recuperarListadoPersonas()) {
-            AreaListar.setText(persona.toString());
+//        for (Persona persona : new PersonaSRV().recuperarListadoPersonas()) {
+//            AreaListar.setText(persona.toString());
+//        }
+        int i=0;
+        PersonaSRV personaSRV= new PersonaSRV();
+        Persona p=personaSRV.buscarPersona(i);
+        System.out.println(personaSRV.buscarPersona(0).toString());
+        System.out.println(personaSRV.buscarPersona(1).toString());
+        System.out.println(personaSRV.buscarPersona(2).toString());
+        System.out.println(personaSRV.buscarPersona(3).toString());
+        System.out.println(personaSRV.buscarPersona(4).toString());
+        System.out.println(personaSRV.buscarPersona(5).toString());
+        System.out.println(personaSRV.buscarPersona(6).toString());     
+        while (p!=null) {
+            AreaListar.append(personaSRV.buscarPersona(i).toString());
+            i++;
+            p=personaSRV.buscarPersona(i);
         }
     }
 
