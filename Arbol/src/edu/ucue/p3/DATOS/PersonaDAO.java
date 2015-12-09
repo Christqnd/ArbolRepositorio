@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
@@ -129,6 +130,12 @@ public class PersonaDAO {
         
         try {
             System.out.println("\t\tArbol ordenado \n"+getArbolBmas().mostrarArbol());
+            ArrayList<Integer> numeros = getArbolBmas().obtenerNumRegistro();
+            String string="";
+            for (Integer numero : numeros) {
+                string=string+" "+Integer.toString(numero);
+            }
+            System.out.println("Arbols del array : "+string);
         } catch (IOException ex) {
             Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -139,6 +146,7 @@ public class PersonaDAO {
             numeroRegistros++;
         }
     }
+    
 
     private boolean ingresar(int i, Persona cliente, int j) throws PersonaInvalidaException, ClaveNodoDuplicadaException {
         if (buscarPersona(cliente.getCedula()) != null & j == 0) {
@@ -208,6 +216,9 @@ public class PersonaDAO {
             }
         }
         return null;
+    }
+    public ArrayList<Integer> recuperarNumeroRegistros() throws IOException{
+        return getArbolBmas().obtenerNumRegistro();
     }
 
 }

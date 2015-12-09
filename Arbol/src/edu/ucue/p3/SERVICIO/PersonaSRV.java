@@ -7,6 +7,8 @@ package edu.ucue.p3.SERVICIO;
 
 import edu.ucue.p3.DATOS.PersonaDAO;
 import edu.ucue.p3.MODELO.Persona;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -31,15 +33,21 @@ public class PersonaSRV {
         validarCedula(cedula);
         return PersonaDAO.instancia().read(cedula);
     }
+    
     public Persona buscarPersona(int i){
         return PersonaDAO.instancia().recuperar(i);
     }
-
+    
+    public ArrayList<Integer> registrosOrdenados() throws IOException{
+        return PersonaDAO.instancia().recuperarNumeroRegistros();
+    }
+    
     public boolean modificarPersona(String nombre, String apellido, String cedula) throws DataException {
         validarDatos(nombre, apellido);
         validarCedula(cedula);
         return PersonaDAO.instancia().update(PersonaDAO.instancia().read(cedula), new Persona(nombre, apellido, cedula));
     }
+    
     public Collection<Persona> recuperarListadoPersonas(){
         return PersonaDAO.instancia().getListaPersonas();
     }
