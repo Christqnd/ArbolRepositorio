@@ -35,14 +35,15 @@ public class PersonaDAO {
     private int numeroRegistros;
 
     private PersonaDAO() {
-        iniciar();
+//        iniciars();
+        crearArchivo(new File("src\\edu\\ucue\\p3\\ARCHIVOS\\Personas.dat"));
         this.abo = new ArbolBMasOrd(new File("src\\edu\\ucue\\p3\\ARCHIVOS\\arbolPersonas.dat"));
         listaPersonas = new TreeSet<>();
     }
 
-    private void iniciar() {
-        crearArchivo(new File("src\\edu\\ucue\\p3\\ARCHIVOS\\Personas.dat"));
-    }
+//    private void iniciars() {
+//        crearArchivo(new File("src\\edu\\ucue\\p3\\ARCHIVOS\\Personas.dat"));
+//    }
 
     public void crearArchivo(File archivo) {
         if (!archivo.exists()) {
@@ -51,13 +52,13 @@ public class PersonaDAO {
                 PersonaDAO.instancia().personas();
                 numeroRegistros = (int) Math.ceil((double) file.length() / (double) dimRegistro);
             } catch (FileNotFoundException ex) {
-                System.out.println("El Archivo no Existe : "+ex.getMessage());
+                System.out.println("El Archivo no Existe : " + ex.getMessage());
             } catch (IOException ex) {
-                System.out.println("Error IOException: "+ex.getMessage());
+                System.out.println("Error IOException: " + ex.getMessage());
             } catch (PersonaInvalidaException ex) {
-                System.out.println("Error PersonaInvalidaException: "+ex.getMessage());
+                System.out.println("Error PersonaInvalidaException: " + ex.getMessage());
             } catch (ClaveNodoDuplicadaException ex) {
-                System.out.println("Error ClaveNodoDuplicadaException: "+ex.getMessage());
+                System.out.println("Error ClaveNodoDuplicadaException: " + ex.getMessage());
             }
         } else {
             try {
@@ -120,36 +121,36 @@ public class PersonaDAO {
     }
 
     private void personas() throws PersonaInvalidaException, ClaveNodoDuplicadaException {
-        ingresarPersona(new Persona("Juan", "Quito", "0919234387"), 0);
-        ingresarPersona(new Persona("Estevan", "Bernal", "0919283726"), 0);
-        ingresarPersona(new Persona("Pedro", "Torres", "1234567890"), 0);
-        ingresarPersona(new Persona("Joel", "Loja", "1231231231"), 0);
-        ingresarPersona(new Persona("Daniel", "Toral", "4564564564"), 0);
-        ingresarPersona(new Persona("Carlos", "Castro", "6786786788"), 0);
-        ingresarPersona(new Persona("Mike", "Novoa", "2349823545"), 0);
-        
+        // parametro final en ingresarPersona(..,0) es para indicar que es creacion y para modificar es 1
+        ingresarPersona(new Persona("Juan", "Quito", "0919234387"), 'c');
+        ingresarPersona(new Persona("Estevan", "Bernal", "0919283726"), 'c');
+        ingresarPersona(new Persona("Pedro", "Torres", "1234567890"), 'c');
+        ingresarPersona(new Persona("Joel", "Loja", "1231231231"), 'c');
+        ingresarPersona(new Persona("Daniel", "Toral", "4564564564"), 'c');
+        ingresarPersona(new Persona("Carlos", "Castro", "6786786788"), 'c');
+        ingresarPersona(new Persona("Mike", "Novoa", "2349823545"), 'c');
+
         try {
-            System.out.println("\t\tArbol ordenado \n"+getArbolBmas().mostrarArbol());
+            System.out.println("\t\tArbol ordenado \n" + getArbolBmas().mostrarArbol());
             ArrayList<Integer> numeros = getArbolBmas().obtenerNumRegistro();
-            String string="";
+            String string = "";
             for (Integer numero : numeros) {
-                string=string+" "+Integer.toString(numero);
+                string = string + " " + Integer.toString(numero);
             }
-            System.out.println("Arbols del array : "+string);
+            System.out.println("Arbols del array : " + string);
         } catch (IOException ex) {
             Logger.getLogger(PersonaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void ingresarPersona(Persona persona, int i) throws PersonaInvalidaException, ClaveNodoDuplicadaException {
-        if (ingresar(numeroRegistros, persona, i)) {
+    public void ingresarPersona(Persona persona, char modo) throws PersonaInvalidaException, ClaveNodoDuplicadaException {
+        if (ingresar(numeroRegistros, persona, modo)) {
             numeroRegistros++;
         }
     }
-    
 
-    private boolean ingresar(int i, Persona cliente, int j) throws PersonaInvalidaException, ClaveNodoDuplicadaException {
-        if (buscarPersona(cliente.getCedula()) != null & j == 0) {
+    private boolean ingresar(int i, Persona cliente,char modo) throws PersonaInvalidaException, ClaveNodoDuplicadaException {
+        if (buscarPersona(cliente.getCedula()) != null && modo == 'c') {
             throw new PersonaInvalidaException("La persona ya existe");
         }
         if (i >= 0 && i <= numeroRegistros) {
@@ -160,7 +161,7 @@ public class PersonaDAO {
                 file.writeUTF(nombre);
                 String apellido = rellenar(cliente.getApellido(), 30);
                 file.writeUTF(apellido);
-                if (j == 0) {
+                if (modo == 'c') {
                     getArbolBmas().agregarObjeto(cliente.getCedula(), cliente.getApellido(), numeroRegistros);
                 }
                 return true;
@@ -182,7 +183,7 @@ public class PersonaDAO {
     }
 
     public ArbolBMasOrd getArbolBmas() {
-        return abo; 
+        return abo;
     }
 
     public Persona recuperar(int i) {
@@ -217,7 +218,8 @@ public class PersonaDAO {
         }
         return null;
     }
-    public ArrayList<Integer> recuperarNumeroRegistros() throws IOException{
+
+    public ArrayList<Integer> recuperarNumeroRegistros() throws IOException {
         return getArbolBmas().obtenerNumRegistro();
     }
 

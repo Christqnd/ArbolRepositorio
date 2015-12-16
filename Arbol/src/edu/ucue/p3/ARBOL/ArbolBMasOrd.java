@@ -85,10 +85,10 @@ public class ArbolBMasOrd {
         }
     }
     
-    public Nodo recuperarRegistro(int i ) throws IOException{
-        if(i>=0 && i<nRegistros){
+    public Nodo recuperarRegistro(int posicion ) throws IOException{
+        if(posicion>=0 && posicion<nRegistros){
             Nodo nuevoNodo=new Nodo();
-            file.seek(inicio+i*tamRegistros);
+            file.seek(inicio+posicion*tamRegistros);
             nuevoNodo.setNumeroRegistro(file.readInt());
             nuevoNodo.setNodoHoja(file.readBoolean());
             nuevoNodo.setNumClaves(file.readInt());
@@ -120,12 +120,12 @@ public class ArbolBMasOrd {
         }
     }
     
-    public void agregarObjeto(String clave, String ord, int valor) throws ClaveNodoDuplicadaException, IOException{
+    public void agregarObjeto(String clave_cedula, String ord, int valor) throws ClaveNodoDuplicadaException, IOException{
         try {
-            if(buscarClave(clave)==-1)
+            if(buscarClave(clave_cedula)==-1)
                 throw new ClaveNodoDuplicadaException();       
         }catch(IOException | ClaveNodoDuplicadaException ex){
-            agregarElemento(clave, ord, valor);
+            agregarElemento(clave_cedula, ord, valor);
         }
     }
     
@@ -270,11 +270,11 @@ public class ArbolBMasOrd {
         return -1;
     }
 	
-    public int buscarClave(String clave) throws IOException{
+    public int buscarClave(String clave_cedula) throws IOException{
         if (nRegistros<=0) {
             return -1;
         }
-        return buscar(recuperarRegistro(getPosicionRaiz()), clave);
+        return buscar(recuperarRegistro(getPosicionRaiz()), clave_cedula);
     }
     
     public ArrayList<Integer> obtenerNumRegistro() throws IOException{
