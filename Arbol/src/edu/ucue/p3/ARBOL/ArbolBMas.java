@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
  * @author khrist
  */
 public class ArbolBMas {
-
     private RandomAccessFile file;
     private int nRegistros;
     private final int tamRegistros = 101;
@@ -38,7 +37,6 @@ public class ArbolBMas {
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
-
     }
 
     public void cerrar() {
